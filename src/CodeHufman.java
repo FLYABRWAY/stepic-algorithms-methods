@@ -146,6 +146,34 @@ class CodeHufman {
         System.out.println(codeMessage);
     }
 
+    void decodeRun() {
+        Scanner in = new Scanner(System.in);
+
+        int k = in.nextInt(); // количество различных букв, встречающихся в строке
+        int length = in.nextInt(); // размер, получившейся закодированной строки
+
+        Map<String, Character> codeToLetter = new HashMap<>();
+        for (int i = 0; i<k; i++) {
+            Character letter = in.next().charAt(0);
+            String charCode = in.next();
+            codeToLetter.put(charCode, letter);
+        }
+
+        String codeMessage = in.next();
+
+        StringBuilder result = new StringBuilder(length);
+        StringBuilder temp = new StringBuilder();
+        for (int i = 0; i<codeMessage.length(); i++) {
+            temp.append(codeMessage.charAt(i));
+            if (codeToLetter.containsKey(temp.toString())) {
+                result.append(codeToLetter.get(temp.toString()));
+                temp.delete(0, temp.length());
+            }
+        }
+
+        System.out.println(result.toString());
+    }
+
     private Map<Character, Entry> createFrequencyEntry(char[] letters) {
         Map<Character, CodeHufman.Entry> lettersToEntry = new HashMap<>(27);
         for (char letter : letters) {
